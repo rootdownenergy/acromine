@@ -15,7 +15,7 @@ class SearchViewModelTest {
     // does net call succeed?
     @Test
     fun does_input_call_net_return_not_error(){
-        val net_response: Flow<List<String>> = flowOf(listOf("test", "data", "response"))
+        val net_response: Flow<String> = flowOf("test", "data", "response")
 
         assertEquals(10, 5+1+2+2)
     }
