@@ -1,19 +1,17 @@
 package com.rootdown.dev.adidev_albertson.ui.feature_search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.epoxy.EpoxyRecyclerView
-import com.airbnb.epoxy.carousel
 import com.rootdown.dev.adidev_albertson.R
-import com.rootdown.dev.adidev_albertson.SwitchCarouselBindingModel_
 import com.rootdown.dev.adidev_albertson.acromine
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.databinding.FragmentSearchBinding
+import com.rootdown.dev.adidev_albertson.scroll
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -38,6 +36,7 @@ class SearchFragment : Fragment() {
     ): View {
         binding = FragmentSearchBinding.inflate(inflater)
         val epoxyView: EpoxyRecyclerView = binding.rvTask
+
         vm.acromineResult.observe(viewLifecycleOwner) {
             setupEpoxy(it,epoxyView)
         }
@@ -67,20 +66,13 @@ class SearchFragment : Fragment() {
         val xLs = result.lfs
 
         epoxy.withModels {
-            val carouselItemModels = xLs?.map { x ->
-                SwitchCarouselBindingModel_()
-                    .id(x?.id)
-                    .carouselItem(x)
-            }
-            carousel {
-                id(id)
-                if (carouselItemModels != null) {
-                    models(carouselItemModels)
+            if ( xLs != null ){
+                xLs.forEach { x ->
+                    scroll {
+                        id(x?.id)
+                        lf(x)
+                    }
                 }
-            }
-            acromine {
-                id(result.id)
-                acro(result)
             }
         }
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
-import com.rootdown.dev.adidev_albertson.data.repo.SearchRepo
+import com.rootdown.dev.adidev_albertson.data.repo.SearchRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repo: SearchRepo
+    private val repoImpl: SearchRepoImpl
 ) : ViewModel() {
 
     val acromineResult = MutableLiveData<AcromineFull.AcromineFullItem>()
@@ -25,7 +25,7 @@ class SearchViewModel @Inject constructor(
     fun getAcromineReults(q: String) {
         viewModelScope.launch {
             try {
-                val xx = repo.getAcro(q)
+                val xx = repoImpl.getAcro(q)
                 Log.w("XXX", "Response: $xx")
                 acromineResult.postValue(xx)
             } catch (netE: IOException) {

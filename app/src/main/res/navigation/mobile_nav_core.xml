@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.rootdown.dev.adidev_albertson.ui.feature_search.SearchFragment"
-        android:label="Hello Kitty"
+        android:label="Acromine"
         tools:layout="@layout/fragment_search">
 
     </fragment>
