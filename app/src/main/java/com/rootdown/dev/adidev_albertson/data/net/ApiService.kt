@@ -2,8 +2,11 @@ package com.rootdown.dev.adidev_albertson.data.net
 
 
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
+import io.reactivex.Single
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -14,6 +17,9 @@ interface ApiService {
     suspend fun getAcromine(
         @Query("sf") query: String
     ) : AcromineFull
+
+    @GET("dictionary.py?")
+    fun searchByPhrase(@Query("sf") searchPhrase: String): Call<ResponseBody>
     companion object {
         const val BASE_URL = "http://www.nactem.ac.uk/software/acromine/"
         fun ini(): ApiService {

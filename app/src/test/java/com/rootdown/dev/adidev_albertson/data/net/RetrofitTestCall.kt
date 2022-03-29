@@ -1,22 +1,33 @@
 package com.rootdown.dev.adidev_albertson.data.net
 
-import com.rootdown.dev.adidev_albertson.data.repo.SearchRepoImpl
-import com.rootdown.dev.adidev_albertson.ui.feature_search.SearchViewModel
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.Before
-import org.mockito.MockitoAnnotations
+import okhttp3.ResponseBody
+import org.junit.Test
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.http.GET
+import retrofit2.http.Query
+import strikt.api.*
+import strikt.api.expectThat
+
 
 class RetrofitTestCall(val api: ApiService) {
 
-    private lateinit var vm: SearchViewModel
-    @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        val repo = SearchRepoImpl(api)
+    @Test
+    fun `it should GET with query`() {
 
-        vm = SearchViewModel(repo)
+        val remoteApi = api
 
-        val mockWebServer = MockWebServer()
-        mockWebServer.start()
+        val givenSearchQuery = "add"
+
+        val call: Call<ResponseBody> = remoteApi.searchByPhrase(givenSearchQuery)
+
+        expectThat(call.request()) {
+            assertThat("is GET method") {
+                it.method == "GET"
+            }
+            assertThat("has given search query") {
+                it.url.queryParameterValues("search") == listOf(givenSearchQuery)
+            }
+        }
     }
 }
