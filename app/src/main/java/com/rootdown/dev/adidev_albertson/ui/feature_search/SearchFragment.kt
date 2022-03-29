@@ -96,6 +96,5 @@ class SearchFragment : Fragment() {
             vm.getAcromineReults(query)
         }
     }
-
 }
 data class Id(val id: Long = 0L)
