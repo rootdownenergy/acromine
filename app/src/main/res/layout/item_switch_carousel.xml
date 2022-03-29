@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="carouselItem"
+            type="com.rootdown.dev.adidev_albertson.data.model.AcromineFull.AcromineFullItem.Lf" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_margin="8dp"
+        app:cardCornerRadius="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/carouselTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:fontFamily="@font/indieflower"
+                android:textColor="@color/colorPrimary"
+                android:text='@{carouselItem.lf, default="ERROR"}'
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/carouselTextViewFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:fontFamily="@font/indieflower"
+                android:textColor="@color/colorPrimary"
+                android:text='@{carouselItem.freq, default="ERROR"}'
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/carouselTextViewSince"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:fontFamily="@font/indieflower"
+                android:textColor="@color/colorPrimary"
+                android:text='@{carouselItem.since, default="ERROR"}'
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
