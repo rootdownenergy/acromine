@@ -7,7 +7,6 @@ import com.google.gson.annotations.Expose
 class AcromineFull : ArrayList<AcromineFull.AcromineFullItem>(){
     @JsonClass(generateAdapter = true)
     data class AcromineFullItem(
-        val id: Long? = (0..250).random().toLong(),
         @Json(name = "lfs")
         @Expose
         val lfs: List<Lf?>?,
@@ -17,7 +16,6 @@ class AcromineFull : ArrayList<AcromineFull.AcromineFullItem>(){
     ) {
         @JsonClass(generateAdapter = true)
         data class Lf(
-            val id: Long? = (0..250).random().toLong(),
             @Json(name = "freq")
             @Expose
             val freq: Int?, // 267
@@ -33,7 +31,6 @@ class AcromineFull : ArrayList<AcromineFull.AcromineFullItem>(){
         ) {
             @JsonClass(generateAdapter = true)
             data class Var(
-                val id: Long? = (0..250).random().toLong(),
                 @Json(name = "freq")
                 @Expose
                 val freq: Int?, // 244

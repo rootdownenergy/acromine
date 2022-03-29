@@ -1,6 +1,7 @@
 package com.rootdown.dev.adidev_albertson.ui.feature_search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -8,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.rootdown.dev.adidev_albertson.R
-import com.rootdown.dev.adidev_albertson.acromine
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.databinding.FragmentSearchBinding
 import com.rootdown.dev.adidev_albertson.scroll
@@ -23,6 +23,8 @@ class SearchFragment : Fragment() {
     val vm: SearchViewModel by viewModels()
     private lateinit var state: String
     private var searchJob: Job? = null
+    var count = 0
+    var predaciteNum: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,22 +64,25 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupEpoxy(result: AcromineFull.AcromineFullItem, epoxy: EpoxyRecyclerView) {
-
         val xLs = result.lfs
-
+        predaciteNum = xLs?.count()!!
+        Log.w("PRE", "Predacite: $predaciteNum")
         epoxy.withModels {
             if ( xLs != null ){
                 xLs.forEach { x ->
+                    makeIds(predaciteNum)
+                    Log.w("PRE", "COUNT: $count")
                     scroll {
-                        id(x?.id)
+                        id(count)
                         lf(x)
                     }
                 }
             }
         }
     }
-    private fun makeIds(){
-
+    fun makeIds(i: Int){
+        count++
+        if(count<=i){makeIds(predaciteNum)}
     }
 
     private fun updateRepoLsIn() {
