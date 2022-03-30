@@ -16,11 +16,8 @@ class RetrofitTestCall(val api: ApiService) {
     fun `it should GET with query`() {
 
         val remoteApi = api
-
         val givenSearchQuery = "add"
-
         val call: Call<ResponseBody> = remoteApi.searchByPhrase(givenSearchQuery)
-
         expectThat(call.request()) {
             assertThat("is GET method") {
                 it.method == "GET"

@@ -23,8 +23,6 @@ class SearchFragment : Fragment() {
     val vm: SearchViewModel by viewModels()
     private lateinit var state: String
     private var searchJob: Job? = null
-    var count = 0
-    var predaciteNum: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,25 +63,21 @@ class SearchFragment : Fragment() {
 
     private fun setupEpoxy(result: AcromineFull.AcromineFullItem, epoxy: EpoxyRecyclerView) {
         val xLs = result.lfs
-        predaciteNum = xLs?.count()!!
-        Log.w("PRE", "Predacite: $predaciteNum")
+        vm.predaciteNum = xLs?.count()!!
         epoxy.withModels {
             if ( xLs != null ){
                 xLs.forEach { x ->
-                    makeIds(predaciteNum)
-                    Log.w("PRE", "COUNT: $count")
+                    vm.makeIds(vm.predaciteNum)
+                    Log.w("PRE", "COUNT: $vm.count")
                     scroll {
-                        id(count)
+                        id(vm.count)
                         lf(x)
                     }
                 }
             }
         }
     }
-    fun makeIds(i: Int){
-        count++
-        if(count<=i){makeIds(predaciteNum)}
-    }
+
 
     private fun updateRepoLsIn() {
         val x: String = state

@@ -16,6 +16,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val repoImpl: SearchRepoImpl
 ) : ViewModel() {
+    var count = 0
+    var predaciteNum: Int = 0
 
     val acromineResult = MutableLiveData<AcromineFull.AcromineFullItem>()
 
@@ -32,6 +34,10 @@ class SearchViewModel @Inject constructor(
                 Log.w("ERRORXXX", netE.message.toString())
             }
         }
+    }
+    fun makeIds(i: Int){
+        count++
+        if(count<=i){makeIds(predaciteNum)}
     }
 
 }
