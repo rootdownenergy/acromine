@@ -1,7 +1,11 @@
 package com.rootdown.dev.adidev_albertson.data.repo
 
 import android.util.Log
+import com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem
+import com.rootdown.dev.adidev_albertson.data.local.AcromineDao
+import com.rootdown.dev.adidev_albertson.data.local.AppDatabase
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
+import com.rootdown.dev.adidev_albertson.data.model.remote.AcromineSearchResult
 import com.rootdown.dev.adidev_albertson.data.net.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,6 +14,7 @@ import javax.inject.Inject
 
 class SearchRepoImpl @Inject constructor(
     private val api: ApiService,
+    private val acromineDao: AcromineDao
 ) : SearchRepo {
     override suspend fun getAcro(q: String): AcromineFull.AcromineFullItem {
         var result: AcromineFull.AcromineFullItem? = null
@@ -29,5 +34,9 @@ class SearchRepoImpl @Inject constructor(
             Log.w("!!!", "Response: $acroLs")
         }
         return result!!
+    }
+
+    override suspend fun saveSearch(xIn: AcrominDataItem) {
+        acromineDao.insertAll(xIn)
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">adidev_albertson</string>
+    <string name="saved_searches">Saved Searches</string>
+    <string name="save_acromine_search">save acromine search</string>
 </resources>

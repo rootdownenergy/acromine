@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.rootdown.dev.adidev_albertson.R
+import com.rootdown.dev.adidev_albertson.acromine
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.databinding.FragmentSearchBinding
 import com.rootdown.dev.adidev_albertson.scroll
@@ -40,6 +41,7 @@ class SearchFragment : Fragment() {
         vm.acromineResult.observe(viewLifecycleOwner) {
             setupEpoxy(it,epoxyView)
         }
+
         return binding.root
     }
 
@@ -65,6 +67,13 @@ class SearchFragment : Fragment() {
         val xLs = result.lfs
         vm.predaciteNum = xLs?.count()!!
         epoxy.withModels {
+            acromine {
+                id(1)
+                acro(result)
+                clickListener { x ->
+
+                }
+            }
             if ( xLs != null ){
                 xLs.forEach { x ->
                     vm.makeIds(vm.predaciteNum)
@@ -77,6 +86,7 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
 
 
     private fun updateRepoLsIn() {
