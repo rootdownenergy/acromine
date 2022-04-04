@@ -1,1 +1,1 @@
-![Screenshot](screenshot_adidev_acromine_addons.gif)
+![Screenshot](screenshot_adidev_acromine_addons2.gif)
