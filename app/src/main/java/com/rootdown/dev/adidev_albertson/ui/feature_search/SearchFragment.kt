@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
                 id(1)
                 acro(result)
                 clickListener { x ->
-
+                    vm.saveSearch()
                 }
             }
             if ( xLs != null ){

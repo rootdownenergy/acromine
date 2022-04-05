@@ -8,7 +8,7 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="acro"
-            type="com.rootdown.dev.adidev_albertson.data.model.AcromineFull.AcromineFullItem" />
+            type="com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,14 +18,23 @@
         android:padding="10dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardCornerRadius="16dp">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="@{clickListener}"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -35,37 +44,21 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/acro_txt_main"
+                    android:id="@+id/savedSearchTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/indieflower"
                     android:text='@{acro.sf, default="HTW"}'
                     android:textColor="@color/colorPrimary"
                     android:textSize="30sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnSaveSearch"
-                    android:onClick="@{clickListener}"
-                    android:focusable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#ff000000"
-                    android:clickable="true"
-                    android:contentDescription="@string/save_acromine_search"
-                    app:backgroundTint="#ff000000"
-                    app:fabSize="normal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:rippleColor="#ff000000"
-                    app:srcCompat="@drawable/ic_baseline_save_24" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

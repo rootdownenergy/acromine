@@ -6,5 +6,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SavedViewModel @Inject constructor(
+
 ) : ViewModel() {
 }
