@@ -19,7 +19,7 @@ class SearchRepoImpl @Inject constructor(
     private val acromineDao: AcromineDao
 ) : SearchRepo {
     override suspend fun getAcro(q: String): AcromineFull.AcromineFullItem {
-        var result: AcromineFull.AcromineFullItem? = null
+        lateinit var result: AcromineFull.AcromineFullItem
         withContext(Dispatchers.IO){
             val acroLs = api.getAcromine(q)
             if(acroLs.isEmpty()){
@@ -35,7 +35,7 @@ class SearchRepoImpl @Inject constructor(
             }
             Log.w("!!!", "Response: $acroLs")
         }
-        return result!!
+        return result
     }
 
     override suspend fun saveSearch(xIn: AcrominDataItem) {

@@ -19,9 +19,6 @@ interface AcromineDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(acromine: AcrominDataItem)
 
-    @Query("SELECT * FROM acromine_item WHERE sf LIKE :queryString")
-    fun acromineItemById(queryString: String?): LiveData<AcrominDataItem>
-
     @Query("DELETE FROM acromine_item WHERE id = :acroId")
     suspend fun deleteAcromineItem(acroId: Int)
 

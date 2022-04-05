@@ -70,4 +70,17 @@ class AcromineDaoTest {
         val allAcromine = dao.getAcromine().asLiveData().getOrAwaitValue()
         assertThat(allAcromine).doesNotContain(item)
     }
+
+    @Test
+    fun getAcromineItemById() = runTest {
+        val ls: MutableList<String> = mutableListOf("jfhpisuadh","hpiuerh")
+        val item: AcrominDataItem = AcrominDataItem(id = 1, lfs = ls, sf = "DFSDf")
+        val item2: AcrominDataItem = AcrominDataItem(id = 2, lfs = ls, sf = "D345")
+        val item3: AcrominDataItem = AcrominDataItem(id = 3, lfs = ls, sf = "Der245")
+        dao.insertAll(item)
+        dao.insertAll(item2)
+        dao.insertAll(item3)
+        val get2 = dao.acromineById(item2.id).getOrAwaitValue()
+        assertThat(get2.id).isEqualTo(item2.id)
+    }
 }
