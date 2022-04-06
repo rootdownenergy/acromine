@@ -22,9 +22,8 @@ class SearchViewModel @Inject constructor(
     var countAcro = 0
     var predicateNum2: Int = 0
 
-    private val _acromineResult = MutableLiveData<Resource<Event<AcromineFull.AcromineFullItem>>>()
-    val acromineResultX: LiveData<Resource<Event<AcromineFull.AcromineFullItem>>> = _acromineResult
-    val acromineResult = MutableLiveData<AcromineFull.AcromineFullItem>()
+    private val _acromineResult = MutableLiveData<AcromineFull.AcromineFullItem>()
+    val acromineResult: LiveData<AcromineFull.AcromineFullItem> = _acromineResult
     lateinit var savedSearches: LiveData<List<AcrominDataItem>>
 
     init {
@@ -47,7 +46,7 @@ class SearchViewModel @Inject constructor(
             try {
                 val xx = repoImpl.getAcro(q)
                 Log.w("XXX", "Response: $xx")
-                acromineResult.postValue(xx)
+                _acromineResult.postValue(xx)
             } catch (netE: IOException) {
                 Log.w("ERRORXXX", netE.message.toString())
             }
