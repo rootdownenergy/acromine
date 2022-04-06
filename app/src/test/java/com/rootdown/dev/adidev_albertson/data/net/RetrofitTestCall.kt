@@ -3,11 +3,7 @@ package com.rootdown.dev.adidev_albertson.data.net
 import okhttp3.ResponseBody
 import org.junit.Test
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.http.GET
-import retrofit2.http.Query
-import strikt.api.*
-import strikt.api.expectThat
+
 
 
 class RetrofitTestCall(val api: ApiService) {

@@ -45,4 +45,8 @@ class SearchRepoImpl @Inject constructor(
     override suspend fun getSearches(): Flow<List<AcrominDataItem>> {
         return acromineDao.getAcromine()
     }
+
+    override suspend fun deleteAcromineItem(id: Int) {
+        acromineDao.deleteAcromineItem(id)
+    }
 }

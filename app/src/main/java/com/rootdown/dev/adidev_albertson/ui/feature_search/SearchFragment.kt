@@ -1,13 +1,17 @@
 package com.rootdown.dev.adidev_albertson.ui.feature_search
 
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.airbnb.epoxy.EpoxyRecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.rootdown.dev.adidev_albertson.R
 import com.rootdown.dev.adidev_albertson.acromine
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
@@ -24,6 +28,7 @@ class SearchFragment : Fragment() {
     val vm: SearchViewModel by viewModels()
     private lateinit var state: String
     private var searchJob: Job? = null
+    private lateinit var xCorLayout: CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class SearchFragment : Fragment() {
     ): View {
         binding = FragmentSearchBinding.inflate(inflater)
         val epoxyView: EpoxyRecyclerView = binding.rvTask
+        xCorLayout = binding.searchCoordinatedLayout
 
         vm.acromineResult.observe(viewLifecycleOwner) {
             setupEpoxy(it,epoxyView)
@@ -66,12 +72,19 @@ class SearchFragment : Fragment() {
     private fun setupEpoxy(result: AcromineFull.AcromineFullItem, epoxy: EpoxyRecyclerView) {
         val xLs = result.lfs
         vm.predaciteNum = xLs?.count()!!
+        vm.predicateNum2 = xLs.size
+        Log.w("SIZE", "SIZE: ${vm.predicateNum2}")
         epoxy.withModels {
             acromine {
-                id(1)
+                vm.makeIds(vm.predicateNum2)
+                id(vm.countAcro)
                 acro(result)
                 clickListener { x ->
                     vm.saveSearch()
+                    Snackbar.make(binding.searchCoordinatedLayout, "Delete ${vm.acromineResult.value?.sf}?", Snackbar.LENGTH_LONG)
+                        .setActionTextColor(Color.GREEN)
+                        .setAction("Undo", DeleteStrainListener(id))
+                        .show()
                 }
             }
             if ( xLs != null ){
@@ -87,8 +100,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-
-
     private fun updateRepoLsIn() {
         val x: String = state
         search(x)
@@ -98,6 +109,14 @@ class SearchFragment : Fragment() {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             vm.getAcromineReults(query)
+        }
+    }
+    inner class DeleteStrainListener(id: Int): View.OnClickListener{
+        val currentAcromineId: Int = id
+        override fun onClick(v: View?) {
+            lifecycleScope.launch {
+                vm.deleteSearch(currentAcromineId)
+            }
         }
     }
 }

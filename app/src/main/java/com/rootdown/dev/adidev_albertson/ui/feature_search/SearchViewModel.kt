@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.data.repo.SearchRepoImpl
+import com.rootdown.dev.adidev_albertson.util.Event
+import com.rootdown.dev.adidev_albertson.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -17,7 +19,11 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
     var count = 0
     var predaciteNum: Int = 0
+    var countAcro = 0
+    var predicateNum2: Int = 0
 
+    private val _acromineResult = MutableLiveData<Resource<Event<AcromineFull.AcromineFullItem>>>()
+    val acromineResultX: LiveData<Resource<Event<AcromineFull.AcromineFullItem>>> = _acromineResult
     val acromineResult = MutableLiveData<AcromineFull.AcromineFullItem>()
     lateinit var savedSearches: LiveData<List<AcrominDataItem>>
 
@@ -36,8 +42,6 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
-
     fun getAcromineReults(q: String) {
         viewModelScope.launch {
             try {
@@ -53,7 +57,6 @@ class SearchViewModel @Inject constructor(
         count++
         if(count<=i){makeIds(predaciteNum)}
     }
-
     fun saveSearch(){
         val ls: String = acromineResult.value?.lfs.toString() ?: "error"
         val strIn: String = acromineResult.value?.sf ?: "error"
@@ -66,6 +69,15 @@ class SearchViewModel @Inject constructor(
                 repoImpl.saveSearch(currSave)
             }catch (e: IOException){
                 Log.w("ERR", "Error on save search: ${e.message}")
+            }
+        }
+    }
+    fun deleteSearch(id: Int){
+        viewModelScope.launch {
+            try {
+                repoImpl.deleteAcromineItem(id)
+            }catch (e: IOException){
+                Log.w("Err", "Could not delete acromine search item: ${e.message}")
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.rootdown.dev.adidev_albertson.vm
 
 import android.util.Log
+import com.rootdown.dev.adidev_albertson.data.source.FakeSearchRepo
 import com.rootdown.dev.adidev_albertson.data.source.MockResponseFileReader
 import org.junit.Assert.*
 import org.junit.Test
@@ -8,7 +9,9 @@ import java.nio.file.FileSystems
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class SearchViewModelTest {
+class SearchViewModelTest(
+    val fakeData: FakeSearchRepo
+) {
 
     @Test
     fun `read sample success json file`(){

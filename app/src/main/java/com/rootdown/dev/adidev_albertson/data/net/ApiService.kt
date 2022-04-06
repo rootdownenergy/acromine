@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.Response
 
 interface ApiService {
     @GET("dictionary.py?")
@@ -21,7 +22,7 @@ interface ApiService {
     @GET("dictionary.py?")
     suspend fun getAcromineSearchResult(
         @Query("sf") query: String
-    ) : AcromineSearchResult
+    ) : Response<AcromineSearchResult>
 
     @GET("dictionary.py?")
     fun searchByPhrase(@Query("sf") searchPhrase: String): Call<ResponseBody>
