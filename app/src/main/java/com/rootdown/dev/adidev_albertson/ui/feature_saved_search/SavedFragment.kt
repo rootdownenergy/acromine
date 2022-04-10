@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SavedFragment : Fragment() {
 
     private lateinit var binding: FragmentSavedBinding
-
     val vm: SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

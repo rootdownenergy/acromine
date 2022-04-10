@@ -8,11 +8,11 @@ import com.rootdown.dev.adidev_albertson.data.repo.SearchRepo
 import kotlinx.coroutines.flow.Flow
 import kotlin.math.sin
 
-class FakeSearchRepo() : SearchRepo {
+class FakeSearchRepo : SearchRepo {
     private val acromineDataItem = mutableListOf<AcrominDataItem>()
     private val acromineResponse = mutableListOf<AcromineFull.AcromineFullItem>()
     private val observableDataItem = MutableLiveData<List<AcrominDataItem>>(acromineDataItem)
-    private val currentAcrominDataItem = AcrominDataItem(id = 1, lfs = mutableListOf("TDD","TDDX"), sf = "TDD")
+    val currentAcrominDataItem = AcrominDataItem(id = 1, lfs = mutableListOf("TDD","TDDX"), sf = "TDD")
     private var eMsg = "error the current acromine data item not found"
     private var flagger = false
 

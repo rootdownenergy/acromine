@@ -8,7 +8,7 @@ open class Event<out T>(private val content: T){
     /*
     * returns the generic in and prevents re-instantiation
      */
-    fun getIfhandled(): T?{
+    fun getIfNothandled(): T?{
         return if (handled){
             null
         } else {
