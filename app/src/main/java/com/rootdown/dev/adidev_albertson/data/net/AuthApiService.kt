@@ -16,21 +16,4 @@ interface AuthApiService {
         @Query("password") password: String,
         @Query("c_password") c_password: String,
     ) : Response<String>
-    companion object {
-        const val BASE_URL = "https://dev.rootdownsoil.com/"
-        fun ini(): AuthApiService {
-            val logger = HttpLoggingInterceptor()
-            logger.level = HttpLoggingInterceptor.Level.BASIC
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(AuthApiService::class.java)
-        }
-    }
 }

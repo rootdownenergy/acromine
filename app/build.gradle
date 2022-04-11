@@ -183,4 +183,10 @@ dependencies {
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
+    def ktor_version = "1.6.3"
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+
 }

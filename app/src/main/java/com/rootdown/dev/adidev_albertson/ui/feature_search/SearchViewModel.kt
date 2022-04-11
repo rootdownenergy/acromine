@@ -33,8 +33,8 @@ class SearchViewModel @Inject constructor(
     private lateinit var defaultAcromine: Event<Resource<AcrominDataItem>>
 
     init {
-        //getAcromineReults("ADD")
-        //getSearches()
+        getAcromineReults("ADD")
+        getSearches()
     }
 
     private fun getSearches() {

@@ -26,21 +26,5 @@ interface ApiService {
 
     @GET("dictionary.py?")
     fun searchByPhrase(@Query("sf") searchPhrase: String): Call<ResponseBody>
-    companion object {
-        const val BASE_URL = "http://www.nactem.ac.uk/software/acromine/"
-        fun ini(): ApiService {
-            val logger = HttpLoggingInterceptor()
-            logger.level = HttpLoggingInterceptor.Level.BASIC
 
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ApiService::class.java)
-        }
-    }
 }
