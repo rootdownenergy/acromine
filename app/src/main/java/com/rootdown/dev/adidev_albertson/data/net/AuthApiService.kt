@@ -17,7 +17,7 @@ interface AuthApiService {
         @Query("c_password") c_password: String,
     ) : Response<String>
     companion object {
-        const val BASE_URL = "https://dev.rootdownsoil.com/"
+        const val BASE_URL = "https://htw.com/"
         fun ini(): AuthApiService {
             val logger = HttpLoggingInterceptor()
             logger.level = HttpLoggingInterceptor.Level.BASIC
