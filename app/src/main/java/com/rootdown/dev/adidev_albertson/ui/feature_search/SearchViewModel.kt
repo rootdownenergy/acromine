@@ -33,8 +33,8 @@ class SearchViewModel @Inject constructor(
     private lateinit var defaultAcromine: Event<Resource<AcrominDataItem>>
 
     init {
-        getAcromineReults("ADD")
-        getSearches()
+        //getAcromineReults("ADD")
+        //getSearches()
     }
 
     private fun getSearches() {
@@ -62,19 +62,9 @@ class SearchViewModel @Inject constructor(
         count++
         if(count<=i){makeIds(predaciteNum)}
     }
-    fun saveSearch(lsIn: String="",str:String=""){
-
-        var ls = acromineResult.value?.lfs.toString()
-        if(ls.isEmpty()){
-            ls = lsIn
-        }
-        var strIn = acromineResult.value?.sf
-        if(strIn!!.isEmpty()){
-            strIn = str
-        }
-        if(ls.isEmpty() && strIn!!.isEmpty()){
-            lsInIfNull(lsIn,str)
-        }
+    fun saveSearch(){
+        val ls = acromineResult.value?.lfs.toString() ?: "error"
+        val strIn = acromineResult.value?.sf ?: "error"
         val lsX: MutableList<String> = mutableListOf()
         lsX.add(ls)
         val currSave: AcrominDataItem = AcrominDataItem(lfs = lsX, sf = strIn)
@@ -89,8 +79,12 @@ class SearchViewModel @Inject constructor(
     private fun lsInIfNull(lsIn:String,strIn:String){
         val lsX: MutableList<String> = mutableListOf()
         lsX.add(lsIn)
-        defaultAcromine = Event(Resource.error(msg = "missing input", data = AcrominDataItem(id = 1, lfs = lsX, sf = strIn)))
-        _acromineData.postValue(defaultAcromine)
+        val currSave: AcrominDataItem = AcrominDataItem(lfs = lsX, sf = strIn)
+        if(lsIn.isEmpty() || strIn.isEmpty()){
+            _acromineData.postValue(Event(Resource.error("fields cannot be null", null)))
+            return
+        }
+        val dataItem = AcrominDataItem(lfs = lsX, sf = strIn)
     }
     fun deleteSearch(id: Int){
         viewModelScope.launch {

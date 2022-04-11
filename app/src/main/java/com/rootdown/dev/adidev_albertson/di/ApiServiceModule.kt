@@ -1,6 +1,7 @@
 package com.rootdown.dev.adidev_albertson.di
 
 import com.rootdown.dev.adidev_albertson.data.net.ApiService
+import com.rootdown.dev.adidev_albertson.data.net.AuthApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +14,7 @@ const val BASE_URL = "http://www.nactem.ac.uk/software/acromine/"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object ApiServiceModule {
     @Provides
     @Singleton
     fun providesRetrofit(): Retrofit {
