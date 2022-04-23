@@ -1,7 +1,6 @@
 package com.rootdown.dev.adidev_albertson.ui
 
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,7 +9,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import com.rootdown.dev.adidev_albertson.R
 import com.rootdown.dev.adidev_albertson.databinding.ActivityMainBinding

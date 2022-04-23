@@ -20,25 +20,19 @@ class FakeSearchRepo : SearchRepo {
     fun shouldReturnNetError(value: Boolean){
         shouldReturnNetworkError = value
     }
-
     private fun refreshLiveData(){
         observableDataItem.postValue(acromineDataItem)
     }
-
-
     override suspend fun getAcro(q: String): AcromineFull.AcromineFullItem {
         return AcromineFull.AcromineFullItem(sf = "TDD", lfs = listOf(AcromineFull.AcromineFullItem.Lf(freq = 123, lf = "TDD", since = 1985,
             listOf(AcromineFull.AcromineFullItem.Lf.Var(freq = 123, lf = "TDD", since = 1985)))))
     }
-
     override suspend fun saveSearch(xIn: AcrominDataItem) {
         acromineDataItem.add(xIn)
     }
-
     override suspend fun getSearches(): Flow<List<AcrominDataItem>> {
         return observableDataItem.asFlow()
     }
-
     override suspend fun deleteAcromineItem(id: Int) {
         if(acromineDataItem.contains(currentAcrominDataItem)) {
             acromineDataItem.remove(currentAcrominDataItem)
@@ -47,5 +41,4 @@ class FakeSearchRepo : SearchRepo {
             flagger = true
         }
     }
-
 }

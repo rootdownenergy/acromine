@@ -14,18 +14,4 @@ import androidx.room.TypeConverters
 @TypeConverters(ListStringConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun acromineDao(): AcromineDao
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE
-                    ?: buildDatabase(context).also { INSTANCE = it }
-            }
-
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, "app.db")
-                .build()
-    }
 }
