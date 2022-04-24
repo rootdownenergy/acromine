@@ -5,19 +5,19 @@ import androidx.lifecycle.*
 import com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.data.repo.SearchRepo
-import com.rootdown.dev.adidev_albertson.data.repo.SearchRepoImpl
+import com.rootdown.dev.adidev_albertson.di.util.ApplicationScope
 import com.rootdown.dev.adidev_albertson.util.Event
 import com.rootdown.dev.adidev_albertson.util.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
-import java.lang.StringBuilder
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
-@HiltViewModel
+@Singleton
 class SearchViewModel @Inject constructor(
-    private val repoImpl: SearchRepo
+    private val repoImpl: SearchRepo,
+    @ApplicationScope private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     var count = 0
     var predaciteNum: Int = 0
@@ -29,16 +29,15 @@ class SearchViewModel @Inject constructor(
 
     private val _acromineData = MutableLiveData<Event<Resource<AcrominDataItem>>>()
     val acromineData: LiveData<Event<Resource<AcrominDataItem>>> = _acromineData
+
     lateinit var savedSearches: LiveData<List<AcrominDataItem>>
-    private lateinit var defaultAcromine: Event<Resource<AcrominDataItem>>
 
     init {
-        getAcromineReults("ADD")
+        getAcromineResults("TDD")
         getSearches()
     }
-
     private fun getSearches() {
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             try {
                 val x = repoImpl.getSearches()
                 savedSearches = x.asLiveData()
@@ -47,11 +46,10 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-    fun getAcromineReults(q: String) {
-        viewModelScope.launch {
+    fun getAcromineResults(q: String) {
+        viewModelScope.launch(defaultDispatcher) {
             try {
                 val xx = repoImpl.getAcro(q)
-                Log.w("XXX", "Response: $xx")
                 _acromineResult.postValue(xx)
             } catch (netE: IOException) {
                 Log.w("ERRORXXX", netE.message.toString())
@@ -67,8 +65,8 @@ class SearchViewModel @Inject constructor(
         val strIn = acromineResult.value?.sf ?: "error"
         val lsX: MutableList<String> = mutableListOf()
         lsX.add(ls)
-        val currSave: AcrominDataItem = AcrominDataItem(lfs = lsX, sf = strIn)
-        viewModelScope.launch {
+        val currSave = AcrominDataItem(lfs = lsX, sf = strIn)
+        viewModelScope.launch(defaultDispatcher) {
             try {
                 repoImpl.saveSearch(currSave)
             }catch (e: IOException){
@@ -76,18 +74,8 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-    private fun lsInIfNull(lsIn:String,strIn:String){
-        val lsX: MutableList<String> = mutableListOf()
-        lsX.add(lsIn)
-        val currSave: AcrominDataItem = AcrominDataItem(lfs = lsX, sf = strIn)
-        if(lsIn.isEmpty() || strIn.isEmpty()){
-            _acromineData.postValue(Event(Resource.error("fields cannot be null", null)))
-            return
-        }
-        val dataItem = AcrominDataItem(lfs = lsX, sf = strIn)
-    }
     fun deleteSearch(id: Int){
-        viewModelScope.launch {
+        viewModelScope.launch(defaultDispatcher) {
             try {
                 repoImpl.deleteAcromineItem(id)
             }catch (e: IOException){

@@ -31,9 +31,18 @@ class SearchRepoImpl @Inject constructor(
                         vars = listOf(AcromineFull.AcromineFullItem.Lf.Var(freq = 1, lf = "", since = 1985))
                     )), sf = "")
             } else {
-                result = acroLs.get(0)
+                result = acroLs[0]
             }
-            Log.w("!!!", "Response: $acroLs")
+        }
+        if(result.equals(null))
+        {
+            result = AcromineFull.AcromineFullItem(
+                lfs = listOf(AcromineFull.AcromineFullItem.Lf(
+                    lf = "ERROR",
+                    freq = 1,
+                    since = 1985,
+                    vars = listOf(AcromineFull.AcromineFullItem.Lf.Var(freq = 1, lf = "", since = 1985))
+                )), sf = "")
         }
         return result
     }

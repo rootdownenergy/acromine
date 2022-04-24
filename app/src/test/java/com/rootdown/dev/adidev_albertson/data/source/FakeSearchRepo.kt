@@ -1,5 +1,6 @@
 package com.rootdown.dev.adidev_albertson.data.source
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem
@@ -11,8 +12,15 @@ import kotlin.math.sin
 class FakeSearchRepo : SearchRepo {
     private val acromineDataItem = mutableListOf<AcrominDataItem>()
     private val acromineResponse = mutableListOf<AcromineFull.AcromineFullItem>()
+
+    private val _observableAcromineResult = MutableLiveData<AcromineFull.AcromineFullItem>()
+    val observableAcromineResult: LiveData<AcromineFull.AcromineFullItem> = _observableAcromineResult
+
+
     private val observableDataItem = MutableLiveData<List<AcrominDataItem>>(acromineDataItem)
-    val currentAcrominDataItem = AcrominDataItem(id = 1, lfs = mutableListOf("TDD","TDDX"), sf = "TDD")
+
+    private val currentAcrominDataItem = AcrominDataItem(id = 1, lfs = mutableListOf("TDD","TDDX"), sf = "TDD")
+
     private var eMsg = "error the current acromine data item not found"
     private var flagger = false
 
@@ -20,6 +28,7 @@ class FakeSearchRepo : SearchRepo {
     fun shouldReturnNetError(value: Boolean){
         shouldReturnNetworkError = value
     }
+
     private fun refreshLiveData(){
         observableDataItem.postValue(acromineDataItem)
     }

@@ -46,11 +46,9 @@ class SearchViewModelTest() {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         api = ApiService.getAcro()
-        vm = SearchViewModel(FakeSearchRepo())
-        vm.getAcromineReults("TDD")
-        vm.acromineResult.observeForever(apiAcroObserver)
+        vm = SearchViewModel(FakeSearchRepo(),mainDispatcherRule.dispatcher)
     }
     @Test
     fun `read sample success json file`(){
@@ -68,11 +66,27 @@ class SearchViewModelTest() {
         TestCase.assertNotNull(reader.xVal)
     }
 
+    @Test
+    fun `simple test vm accessible`(){
+        val testValue = vm.count
+        assertThat(testValue).isEqualTo(0)
+    }
+
+    @Test
+    fun `simple access fun vm`(){
+        vm.getAcromineResults("TDD")
+        val result = vm.acromineData.getOrAwaitValue()
+        assertThat(result).isNotNull()
+    }
+
+
+
     @ExperimentalCoroutinesApi
     @Test
     fun `livedata initial results not null returns true`() = runTest {
-        val t = vm.acromineResult.getOrAwaitValue()
-        assertThat(t.lfs).isNotEmpty()
+        vm.getAcromineResults("TDD")
+        val result = vm.acromineResult.getOrAwaitValue()
+        assertThat(result).isNotNull()
     }
 
 }

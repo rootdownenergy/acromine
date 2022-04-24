@@ -24,6 +24,8 @@ object ApiServiceModule {
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
 
+
+
     @Singleton
     @Provides
     @Named("api")

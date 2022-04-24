@@ -108,7 +108,7 @@ class SearchFragment : Fragment() {
     private fun search(query: String) {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            vm.getAcromineReults(query)
+            vm.getAcromineResults(query)
         }
     }
     inner class DeleteStrainListener(id: Int): View.OnClickListener{

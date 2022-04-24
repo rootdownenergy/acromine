@@ -3,6 +3,7 @@ package com.rootdown.dev.adidev_albertson.data.net
 
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.data.model.remote.AcromineSearchResult
+import com.rootdown.dev.adidev_albertson.di.util.UtilSingleton
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -26,5 +27,15 @@ interface ApiService {
 
     @GET("dictionary.py?")
     fun searchByPhrase(@Query("sf") searchPhrase: String): Call<ResponseBody>
+
+    companion object {
+        fun getAcro(): ApiService {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(UtilSingleton.api)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            return retrofit.create(ApiService::class.java)
+        }
+    }
 
 }
