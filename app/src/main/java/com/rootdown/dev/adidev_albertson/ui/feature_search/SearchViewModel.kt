@@ -5,19 +5,17 @@ import androidx.lifecycle.*
 import com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.data.repo.SearchRepo
-import com.rootdown.dev.adidev_albertson.di.util.ApplicationScope
 import com.rootdown.dev.adidev_albertson.util.Event
 import com.rootdown.dev.adidev_albertson.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
-
-@Singleton
+@HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repoImpl: SearchRepo,
-    @ApplicationScope private val defaultDispatcher: CoroutineDispatcher
+    private val defaultCoroutineDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     var count = 0
     var predaciteNum: Int = 0
@@ -37,7 +35,7 @@ class SearchViewModel @Inject constructor(
         getSearches()
     }
     private fun getSearches() {
-        viewModelScope.launch(defaultDispatcher) {
+        viewModelScope.launch(defaultCoroutineDispatcher) {
             try {
                 val x = repoImpl.getSearches()
                 savedSearches = x.asLiveData()
@@ -47,7 +45,7 @@ class SearchViewModel @Inject constructor(
         }
     }
     fun getAcromineResults(q: String) {
-        viewModelScope.launch(defaultDispatcher) {
+        viewModelScope.launch(defaultCoroutineDispatcher) {
             try {
                 val xx = repoImpl.getAcro(q)
                 _acromineResult.postValue(xx)
@@ -66,7 +64,7 @@ class SearchViewModel @Inject constructor(
         val lsX: MutableList<String> = mutableListOf()
         lsX.add(ls)
         val currSave = AcrominDataItem(lfs = lsX, sf = strIn)
-        viewModelScope.launch(defaultDispatcher) {
+        viewModelScope.launch(defaultCoroutineDispatcher) {
             try {
                 repoImpl.saveSearch(currSave)
             }catch (e: IOException){
@@ -75,7 +73,7 @@ class SearchViewModel @Inject constructor(
         }
     }
     fun deleteSearch(id: Int){
-        viewModelScope.launch(defaultDispatcher) {
+        viewModelScope.launch(defaultCoroutineDispatcher) {
             try {
                 repoImpl.deleteAcromineItem(id)
             }catch (e: IOException){

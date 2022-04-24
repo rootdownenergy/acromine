@@ -5,7 +5,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
-import com.rootdown.dev.adidev_albertson.data.model.remote.AcromineSearchResult
 import com.rootdown.dev.adidev_albertson.data.net.ApiService
 import com.rootdown.dev.adidev_albertson.data.source.FakeSearchRepo
 import com.rootdown.dev.adidev_albertson.data.source.MockResponseFileReader
@@ -13,6 +12,8 @@ import com.rootdown.dev.adidev_albertson.ui.feature_search.SearchViewModel
 import com.rootdown.dev.adidev_albertson.util.*
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,10 +26,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class SearchViewModelTest() {
-
-    @ExperimentalCoroutinesApi
-    @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -48,7 +45,7 @@ class SearchViewModelTest() {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         api = ApiService.getAcro()
-        vm = SearchViewModel(FakeSearchRepo(),mainDispatcherRule.dispatcher)
+        vm = SearchViewModel(FakeSearchRepo(), StandardTestDispatcher())
     }
     @Test
     fun `read sample success json file`(){
@@ -78,8 +75,6 @@ class SearchViewModelTest() {
         val result = vm.acromineData.getOrAwaitValue()
         assertThat(result).isNotNull()
     }
-
-
 
     @ExperimentalCoroutinesApi
     @Test

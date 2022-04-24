@@ -8,19 +8,26 @@ import com.rootdown.dev.adidev_albertson.data.local.AppDatabase
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.data.model.remote.AcromineSearchResult
 import com.rootdown.dev.adidev_albertson.data.net.ApiService
+import com.rootdown.dev.adidev_albertson.di.util.ApplicationScope
+import com.rootdown.dev.adidev_albertson.di.util.DefaultDispatcher
+import com.rootdown.dev.adidev_albertson.di.util.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class SearchRepoImpl @Inject constructor(
     private val api: ApiService,
-    private val acromineDao: AcromineDao
+    private val acromineDao: AcromineDao,
+    @IoDispatcher private val defaultIoDispatcher: CoroutineDispatcher
 ) : SearchRepo {
     override suspend fun getAcro(q: String): AcromineFull.AcromineFullItem {
         lateinit var result: AcromineFull.AcromineFullItem
-        withContext(Dispatchers.IO){
+        withContext(defaultIoDispatcher){
             val acroLs = api.getAcromine(q)
             if(acroLs.isEmpty()){
                 result = AcromineFull.AcromineFullItem(

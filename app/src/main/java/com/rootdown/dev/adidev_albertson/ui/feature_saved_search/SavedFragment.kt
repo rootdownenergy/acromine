@@ -31,6 +31,7 @@ class SavedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        vm.getAcromineResults("tdd")
         binding = FragmentSavedBinding.inflate(inflater)
         val epoxyView: EpoxyRecyclerView = binding.rvSavedSearchs
         vm.savedSearches.observe(viewLifecycleOwner) {

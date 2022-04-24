@@ -7,7 +7,6 @@ import com.rootdown.dev.adidev_albertson.data.local.AcrominDataItem
 import com.rootdown.dev.adidev_albertson.data.model.AcromineFull
 import com.rootdown.dev.adidev_albertson.data.repo.SearchRepo
 import kotlinx.coroutines.flow.Flow
-import kotlin.math.sin
 
 class FakeSearchRepo : SearchRepo {
     private val acromineDataItem = mutableListOf<AcrominDataItem>()
